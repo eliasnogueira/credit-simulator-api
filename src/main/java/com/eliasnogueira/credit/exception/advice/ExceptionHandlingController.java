@@ -62,7 +62,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
     }
 
     /**
-     * Handler to shoe a custom message when CPF is duplicated
+     * Handler to show a custom message when CPF is duplicated
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<MessageDto> dataIntegriyException(DataIntegrityViolationException ex) {
