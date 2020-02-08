@@ -24,7 +24,6 @@
 
 package com.eliasnogueira.credit.controller;
 
-import com.eliasnogueira.credit.dto.MessageDto;
 import com.eliasnogueira.credit.dto.SimulatorDto;
 import com.eliasnogueira.credit.dto.ValidationDto;
 import com.eliasnogueira.credit.entity.Simulator;
@@ -94,7 +93,7 @@ public class SimulatorController {
     @ApiOperation(value = "Return a simulation for a given CPF")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Simulations found", response = SimulatorDto.class),
-        @ApiResponse(code = 404, message = "Simulations not found", response = MessageDto.class)
+        @ApiResponse(code = 404, message = "Simulation not found")
     })
     ResponseEntity<Simulator> one(@PathVariable String cpf) {
         return repository.findByCpf(cpf).
@@ -118,7 +117,7 @@ public class SimulatorController {
     @ApiOperation(value = "Update a simulation by a given CPF")
     @ApiResponses({
         @ApiResponse(code = 200, message = "Simulation updated successfully", response = SimulatorDto.class),
-        @ApiResponse(code = 404, message = "Missing information", response = MessageDto.class),
+        @ApiResponse(code = 404, message = "Simulation not found"),
         @ApiResponse(code = 409, message = "CPF already exists")
     })
     Simulator updateSimulator(@RequestBody SimulatorDto simulator, @PathVariable String cpf) {
@@ -132,7 +131,7 @@ public class SimulatorController {
     @ApiOperation(value = "Delete a simulation by a given CPF", code = 204)
     @ApiResponses({
         @ApiResponse(code = 204, message = "Simulation deleted successfully"),
-        @ApiResponse(code = 404, message = "Simulation not found", response = MessageDto.class)
+        @ApiResponse(code = 404, message = "Simulation not found")
     })
     void delete(@PathVariable String cpf) {
         if (repository.findByCpf(cpf).isEmpty()) {
