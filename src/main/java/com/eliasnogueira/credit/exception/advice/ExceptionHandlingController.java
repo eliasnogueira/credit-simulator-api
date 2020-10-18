@@ -54,7 +54,7 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
                 constraintViolationException.getConstraintViolations().forEach(constraintViolation ->
                     errors.put(constraintViolation.getPropertyPath().toString(), constraintViolation.getMessage()));
 
-                return new ResponseEntity<>(new ValidationDto(errors), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new ValidationDto(errors), HttpStatus.UNPROCESSABLE_ENTITY);
             }
         }
 
@@ -65,13 +65,13 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
      * Handler to show a custom message when CPF is duplicated
      */
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<MessageDto> dataIntegriyException(DataIntegrityViolationException ex) {
+    public ResponseEntity<MessageDto> dataIntegrityException(DataIntegrityViolationException ex) {
         if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
             org.hibernate.exception.ConstraintViolationException constraintViolationException = (org.hibernate.exception.ConstraintViolationException) ex
                 .getCause();
 
             if (constraintViolationException.getSQLException().getMessage().contains("CPF")) {
-                return new ResponseEntity<>(new MessageDto("CPF already exists"), HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(new MessageDto("CPF already exists"), HttpStatus.CONFLICT);
             }
         }
         return ResponseEntity.ok().build();
