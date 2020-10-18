@@ -24,12 +24,18 @@
 
 package com.eliasnogueira.credit.exception;
 
-import lombok.Data;
-
-@Data
-public class SimulatorException extends RuntimeException {
+public class SimulationException extends RuntimeException {
 
     private final String message;
+
+    public SimulationException(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String getMessage() {
+        return message;
+    }
 
     @Override
     public String toString() {

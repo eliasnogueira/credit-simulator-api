@@ -28,13 +28,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
-@Data
-@AllArgsConstructor
-@ApiModel(value = "Simulator")
-public class SimulatorDto {
+@ApiModel(value = "Simulation Dto")
+public class SimulationDto {
 
     @ApiModelProperty(hidden = true)
     @JsonIgnore
@@ -62,4 +58,71 @@ public class SimulatorDto {
 
     @ApiModelProperty(position = 5, required = true, example = "true")
     private Boolean insurance;
+
+    public SimulationDto(Long id, String cpf, String name, String email, BigDecimal amount, Integer installments,
+        Boolean insurance) {
+        this.id = id;
+        this.cpf = cpf;
+        this.name = name;
+        this.email = email;
+        this.amount = amount;
+        this.installments = installments;
+        this.insurance = insurance;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+
+    public Boolean getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Boolean insurance) {
+        this.insurance = insurance;
+    }
 }

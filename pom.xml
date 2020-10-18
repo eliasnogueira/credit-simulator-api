@@ -6,13 +6,15 @@
 
     <groupId>com.eliasnogueira.credit</groupId>
     <artifactId>credit-simulator</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <properties>
-        <springfox.version>2.9.2</springfox.version>
+        <java.version>11</java.version>
+        <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+        <springfox.version>3.0.0</springfox.version>
         <modelmapper.version>2.3.8</modelmapper.version>
-        <lombok.version>1.18.12</lombok.version>
-        <hibernate-jpamodelgen.version>5.4.17.Final</hibernate-jpamodelgen.version>
+        <hibernate-validator.version>6.0.2.Final</hibernate-validator.version>
+        <hibernate-jpamodelgen.version>6.0.0.Alpha6</hibernate-jpamodelgen.version>
     </properties>
 
     <parent>
@@ -45,13 +47,7 @@
 
         <dependency>
             <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${springfox.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
+            <artifactId>springfox-boot-starter</artifactId>
             <version>${springfox.version}</version>
         </dependency>
 
@@ -62,16 +58,20 @@
         </dependency>
 
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombok.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-jpamodelgen</artifactId>
             <version>${hibernate-jpamodelgen.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator-annotation-processor</artifactId>
+            <version>${hibernate-validator.version}</version>
         </dependency>
 
     </dependencies>
@@ -86,10 +86,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                 </configuration>
             </plugin>
         </plugins>

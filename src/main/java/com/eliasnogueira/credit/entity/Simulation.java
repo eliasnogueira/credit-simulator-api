@@ -35,21 +35,12 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Data
-@Builder(access = AccessLevel.PUBLIC)
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(uniqueConstraints = {
     @UniqueConstraint(name = "cpf_unique", columnNames = "cpf")
 })
-public class Simulator {
+public class Simulation {
 
     @Id
     @GeneratedValue
@@ -78,4 +69,76 @@ public class Simulator {
 
     @NotNull(message = "One of the insurance options must be selected")
     private Boolean insurance;
+
+    public Simulation() {}
+
+    public Simulation(@NotNull(message = "Name cannot be empty") String name,
+        @NotNull(message = "CPF cannot be empty") String cpf,
+        @NotNull(message = "E-mail cannot be empty") @Email @Pattern(regexp = ".+@.+\\.[a-z]+", message = "E-mail must be valid") String email,
+        @NotNull(message = "Amount cannot be empty") @Min(value = 1000, message = "Amount must be equal or greater than $ 1.000") @Max(value = 40000, message = "Amount must be equal or less than than $ 40.000") BigDecimal amount,
+        @NotNull(message = "Installments cannot be empty") @Min(value = 2, message = "Installments must be equal or greater than 2") @Max(value = 48, message = "Installments must be equal or less than 48") Integer installments,
+        @NotNull(message = "One of the insurance options must be selected") Boolean insurance) {
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this.amount = amount;
+        this.installments = installments;
+        this.insurance = insurance;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public BigDecimal getAmount() {
+        return amount;
+    }
+
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount;
+    }
+
+    public Integer getInstallments() {
+        return installments;
+    }
+
+    public void setInstallments(Integer installments) {
+        this.installments = installments;
+    }
+
+    public Boolean getInsurance() {
+        return insurance;
+    }
+
+    public void setInsurance(Boolean insurance) {
+        this.insurance = insurance;
+    }
 }
