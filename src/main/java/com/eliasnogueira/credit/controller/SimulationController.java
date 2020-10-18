@@ -34,6 +34,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.ResponseHeader;
+import java.net.URI;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +56,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/v1/simulations")
@@ -106,12 +109,21 @@ public class SimulationController {
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Record a new simulation", code = 201)
     @ApiResponses({
-        @ApiResponse(code = 201, message = "Simulation created successfully", response = SimulationDto.class),
-        @ApiResponse(code = 400, message = "Missing information", response = ValidationDto.class),
+        @ApiResponse(code = 201, message = "Simulation created successfully", response = Object.class,
+            responseHeaders = @ResponseHeader(name = "Location", description = "URI completa contendo o CPF",
+                response = String.class)),
+        @ApiResponse(code = 422, message = "Missing information", response = ValidationDto.class),
         @ApiResponse(code = 409, message = "CPF already exists")
     })
-    public Simulation newSimulator(@Valid @RequestBody SimulationDto simulator) {
-        return repository.save(new ModelMapper().map(simulator, Simulation.class));
+    public ResponseEntity<Simulation> newSimulator(@Valid @RequestBody SimulationDto simulation) {
+        Simulation createdSimulation = repository.save(new ModelMapper().map(simulation, Simulation.class));
+        URI location = ServletUriComponentsBuilder.
+            fromCurrentRequest().
+            path("/{cpf}").
+            buildAndExpand(createdSimulation.getCpf()).
+            toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
     @PutMapping("/{cpf}")
