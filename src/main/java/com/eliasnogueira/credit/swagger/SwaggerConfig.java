@@ -24,9 +24,9 @@
 
 package com.eliasnogueira.credit.swagger;
 
-import com.google.common.util.concurrent.ListenableFuture;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.concurrent.ListenableFuture;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -43,7 +43,7 @@ public class SwaggerConfig {
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).
-            tags(new Tag("Simulator", "CRUD operations for the Simulator endpoint")).
+            tags(new Tag("Simulations", "Simulations API")).
             genericModelSubstitutes(ListenableFuture.class).
             useDefaultResponseMessages(false).
             apiInfo(apiInfo()).
@@ -55,7 +55,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().
-            title("Credit Simulator").
+            title("Simulations API").
             description("Simulate how much money you can borrow").
             build();
     }
