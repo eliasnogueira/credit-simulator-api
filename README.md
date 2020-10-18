@@ -22,7 +22,7 @@ mvn spring-boot:run -Dspring-boot.run.arguments=--server.port=<NEW_PORT>
 ```
 
 ## How to access the documentation (Swagger)
-After the application has started open the link: http://localhost:8089/swagger-ui.html
+After the application has started open the link: http://localhost:8089/swagger-ui/index.html
 
 # Do you want to help?
 Please read the [Contribution guide](CONTRIBUTING.md)
