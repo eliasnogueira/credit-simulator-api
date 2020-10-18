@@ -25,6 +25,7 @@
 package com.eliasnogueira.credit.entity;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -72,12 +73,13 @@ public class Simulation {
 
     public Simulation() {}
 
-    public Simulation(@NotNull(message = "Name cannot be empty") String name,
+    public Simulation(Long id, @NotNull(message = "Name cannot be empty") String name,
         @NotNull(message = "CPF cannot be empty") String cpf,
         @NotNull(message = "E-mail cannot be empty") @Email @Pattern(regexp = ".+@.+\\.[a-z]+", message = "E-mail must be valid") String email,
         @NotNull(message = "Amount cannot be empty") @Min(value = 1000, message = "Amount must be equal or greater than $ 1.000") @Max(value = 40000, message = "Amount must be equal or less than than $ 40.000") BigDecimal amount,
         @NotNull(message = "Installments cannot be empty") @Min(value = 2, message = "Installments must be equal or greater than 2") @Max(value = 48, message = "Installments must be equal or less than 48") Integer installments,
         @NotNull(message = "One of the insurance options must be selected") Boolean insurance) {
+        this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.email = email;
@@ -140,5 +142,41 @@ public class Simulation {
 
     public void setInsurance(Boolean insurance) {
         this.insurance = insurance;
+    }
+
+    @Override
+    public String toString() {
+        return "Simulation{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", cpf='" + cpf + '\'' +
+            ", email='" + email + '\'' +
+            ", amount=" + amount +
+            ", installments=" + installments +
+            ", insurance=" + insurance +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Simulation that = (Simulation) o;
+        return Objects.equals(id, that.id) &&
+            Objects.equals(name, that.name) &&
+            Objects.equals(cpf, that.cpf) &&
+            Objects.equals(email, that.email) &&
+            Objects.equals(amount, that.amount) &&
+            Objects.equals(installments, that.installments) &&
+            Objects.equals(insurance, that.insurance);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, cpf, email, amount, installments, insurance);
     }
 }

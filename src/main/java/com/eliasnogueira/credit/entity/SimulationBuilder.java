@@ -33,12 +33,18 @@ import javax.validation.constraints.Pattern;
 
 public class SimulationBuilder {
 
+    private Long id;
     private @NotNull(message = "Name cannot be empty") String name;
     private @NotNull(message = "CPF cannot be empty") String cpf;
     private @NotNull(message = "E-mail cannot be empty") @Email @Pattern(regexp = ".+@.+\\.[a-z]+", message = "E-mail must be valid") String email;
     private @NotNull(message = "Amount cannot be empty") @Min(value = 1000, message = "Amount must be equal or greater than $ 1.000") @Max(value = 40000, message = "Amount must be equal or less than than $ 40.000") BigDecimal amount;
     private @NotNull(message = "Installments cannot be empty") @Min(value = 2, message = "Installments must be equal or greater than 2") @Max(value = 48, message = "Installments must be equal or less than 48") Integer installments;
     private @NotNull(message = "One of the insurance options must be selected") Boolean insurance;
+
+    public SimulationBuilder id(Long id) {
+        this.id = id;
+        return this;
+    }
 
     public SimulationBuilder name(@NotNull(message = "Name cannot be empty") String name) {
         this.name = name;
@@ -75,6 +81,19 @@ public class SimulationBuilder {
     }
 
     public Simulation build() {
-        return new Simulation(name, cpf, email, amount, installments, insurance);
+        return new Simulation(id, name, cpf, email, amount, installments, insurance);
+    }
+
+    @Override
+    public String toString() {
+        return "SimulationBuilder{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", cpf='" + cpf + '\'' +
+            ", email='" + email + '\'' +
+            ", amount=" + amount +
+            ", installments=" + installments +
+            ", insurance=" + insurance +
+            '}';
     }
 }
