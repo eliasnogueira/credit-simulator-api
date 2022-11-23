@@ -1,10 +1,6 @@
 # Credit Simulator API
 This project was created to start the initial steps with test automation for a REST API using RestAssured.
 
-# Required software
-* Java JDK 11+
-* Maven installed and in your classpath
-
 # About the API
 
 ## How to start the API
