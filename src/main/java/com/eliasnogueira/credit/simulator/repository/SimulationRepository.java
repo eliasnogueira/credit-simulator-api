@@ -22,22 +22,21 @@
  * SOFTWARE.
  */
 
-package com.eliasnogueira.credit;
+package com.eliasnogueira.credit.simulator.repository;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import com.eliasnogueira.credit.simulator.entity.Simulation;
+import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootApplication
-@EnableJpaRepositories
-public class Run {
+@Repository
+public interface SimulationRepository extends JpaRepository<Simulation, Long>, JpaSpecificationExecutor<Simulation> {
 
-    private static final Logger log = LogManager.getLogger(Run.class);
+    Optional<Simulation> findByCpf(@Param("cpf") String cpf);
 
-    public static void main(String[] args) {
-        SpringApplication.run(Run.class, args);
-        log.info("Application has started! Happy tests!");
-    }
+    @Transactional
+    void deleteByCpf(@Param("cpf") String cpf);
 }

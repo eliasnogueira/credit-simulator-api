@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) today.year Elias Nogueira
+ * Copyright (c) 2020 Elias Nogueira
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -22,21 +22,7 @@
  * SOFTWARE.
  */
 
-package com.eliasnogueira.credit.dto;
+package com.eliasnogueira.credit.simulator.dto;
 
-import io.swagger.annotations.ApiModel;
-import java.util.Map;
-
-@ApiModel(value = "Validation")
-public class ValidationDto {
-
-    private Map<String, String> errors;
-
-    public ValidationDto(Map<String, String> errors) {
-        this.errors = errors;
-    }
-
-    public Map<String, String> getErrors() {
-        return errors;
-    }
+public record MessageDto(String message) {
 }

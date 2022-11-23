@@ -22,20 +22,23 @@
  * SOFTWARE.
  */
 
-package com.eliasnogueira.credit.exception.advice;
+package com.eliasnogueira.credit.simulator.exception.advice;
 
-import com.eliasnogueira.credit.dto.MessageDto;
-import com.eliasnogueira.credit.dto.ValidationDto;
+import com.eliasnogueira.credit.simulator.dto.MessageDto;
+import com.eliasnogueira.credit.simulator.dto.ValidationDto;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.persistence.RollbackException;
 import javax.validation.ConstraintViolationException;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -68,12 +71,17 @@ public class ExceptionHandlingController extends ResponseEntityExceptionHandler 
     public ResponseEntity<MessageDto> dataIntegrityException(DataIntegrityViolationException ex) {
         if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
             org.hibernate.exception.ConstraintViolationException constraintViolationException = (org.hibernate.exception.ConstraintViolationException) ex
-                .getCause();
+                    .getCause();
 
             if (constraintViolationException.getSQLException().getMessage().contains("CPF")) {
                 return new ResponseEntity<>(new MessageDto("CPF already exists"), HttpStatus.CONFLICT);
             }
         }
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<MessageDto> restrictionFound() {
+        return new ResponseEntity<>(new MessageDto("CPF has a restriction"), HttpStatus.FORBIDDEN);
     }
 }

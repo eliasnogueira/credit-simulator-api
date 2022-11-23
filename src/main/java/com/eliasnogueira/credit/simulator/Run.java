@@ -22,23 +22,22 @@
  * SOFTWARE.
  */
 
-package com.eliasnogueira.credit.exception;
+package com.eliasnogueira.credit.simulator;
 
-public class SimulationException extends RuntimeException {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-    private final String message;
+@SpringBootApplication
+@EnableJpaRepositories
+public class Run {
 
-    public SimulationException(String message) {
-        this.message = message;
-    }
+    private static final Logger log = LogManager.getLogger(Run.class);
 
-    @Override
-    public String getMessage() {
-        return message;
-    }
-
-    @Override
-    public String toString() {
-        return message;
+    public static void main(String[] args) {
+        SpringApplication.run(Run.class, args);
+        log.info("Application has started! Happy tests!");
     }
 }

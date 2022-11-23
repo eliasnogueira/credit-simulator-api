@@ -22,23 +22,16 @@
  * SOFTWARE.
  */
 
-package com.eliasnogueira.credit.exception.advice;
+package com.eliasnogueira.credit.simulator.exception;
 
-import com.eliasnogueira.credit.dto.MessageDto;
-import com.eliasnogueira.credit.exception.SimulationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-@ControllerAdvice
-public class SimulationAdvice {
+@EqualsAndHashCode(callSuper = true)
+@Data
+@AllArgsConstructor
+public class SimulationException extends RuntimeException {
 
-    @ResponseBody
-    @ExceptionHandler(SimulationException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    MessageDto simulatorHandler(SimulationException e) {
-        return new MessageDto(e.toString());
-    }
+    private final String message;
 }
