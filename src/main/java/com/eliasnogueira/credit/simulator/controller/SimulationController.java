@@ -30,6 +30,7 @@ import com.eliasnogueira.credit.simulator.entity.Simulation;
 import com.eliasnogueira.credit.simulator.exception.RestTemplateErrorHandler;
 import com.eliasnogueira.credit.simulator.exception.SimulationException;
 import com.eliasnogueira.credit.simulator.repository.SimulationRepository;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.env.Environment;
@@ -51,7 +52,6 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.Valid;
 import java.net.URI;
 import java.text.MessageFormat;
 import java.util.List;
@@ -77,9 +77,9 @@ public class SimulationController {
         List<Simulation> simulationsFound;
 
         Example<Simulation> example =
-                Example.of(Simulation.builder().name(name).build(),
-                        ExampleMatcher.matchingAny().
-                                withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains()));
+            Example.of(Simulation.builder().name(name).build(),
+                ExampleMatcher.matchingAny().
+                    withMatcher("name", ExampleMatcher.GenericPropertyMatchers.contains()));
 
         simulationsFound = repository.findAll(example);
 
@@ -93,8 +93,8 @@ public class SimulationController {
     @GetMapping("/{cpf}")
     public ResponseEntity<Simulation> one(@PathVariable String cpf) {
         return repository.findByCpf(cpf).
-                map(simulator -> ResponseEntity.ok().body(simulator)).
-                orElseThrow(() -> new SimulationException(MessageFormat.format(CPF_NOT_FOUND, cpf)));
+            map(simulator -> ResponseEntity.ok().body(simulator)).
+            orElseThrow(() -> new SimulationException(MessageFormat.format(CPF_NOT_FOUND, cpf)));
     }
 
     @PostMapping("/")
@@ -104,10 +104,10 @@ public class SimulationController {
 
         Simulation createdSimulation = repository.save(new ModelMapper().map(simulation, Simulation.class));
         URI location = ServletUriComponentsBuilder.
-                fromCurrentRequest().
-                path("/{cpf}").
-                buildAndExpand(createdSimulation.getCpf()).
-                toUri();
+            fromCurrentRequest().
+            path("/{cpf}").
+            buildAndExpand(createdSimulation.getCpf()).
+            toUri();
 
         return ResponseEntity.created(location).build();
     }
@@ -115,8 +115,8 @@ public class SimulationController {
     @PutMapping("/{cpf}")
     public Simulation updateSimulator(@RequestBody SimulationDto simulator, @PathVariable String cpf) {
         return update(new ModelMapper().
-                map(simulator, Simulation.class), cpf).
-                orElseThrow(() -> new SimulationException(MessageFormat.format(CPF_NOT_FOUND, cpf)));
+            map(simulator, Simulation.class), cpf).
+            orElseThrow(() -> new SimulationException(MessageFormat.format(CPF_NOT_FOUND, cpf)));
     }
 
     @DeleteMapping("/{cpf}")
@@ -150,7 +150,7 @@ public class SimulationController {
         RestTemplate template = new RestTemplateBuilder().errorHandler(new RestTemplateErrorHandler()).build();
 
         String restrictionsEndpoint = String.format("%s:%s%s", env.getProperty("restrictions.host"),
-                env.getProperty("restrictions.port"), env.getProperty("restrictions.path"));
+            env.getProperty("restrictions.port"), env.getProperty("restrictions.path"));
 
         var response = template.getForObject(restrictionsEndpoint, MessageDto.class, cpf);
         if (response != null) throw new ResponseStatusException(HttpStatus.FORBIDDEN, response.message());

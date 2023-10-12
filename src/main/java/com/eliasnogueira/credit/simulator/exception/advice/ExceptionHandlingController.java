@@ -29,9 +29,9 @@ import com.eliasnogueira.credit.simulator.dto.ValidationDto;
 
 import java.util.HashMap;
 import java.util.Map;
-import javax.persistence.RollbackException;
-import javax.validation.ConstraintViolationException;
 
+import jakarta.persistence.RollbackException;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
