@@ -63,7 +63,6 @@ import java.util.function.Consumer;
 public class SimulationController {
 
     private final SimulationRepository repository;
-
     private final Environment env;
     private static final String CPF_NOT_FOUND = "CPF {0} not found";
 
