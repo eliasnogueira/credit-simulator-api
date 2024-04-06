@@ -35,7 +35,7 @@ public class RestTemplateErrorHandler implements ResponseErrorHandler {
     // ignoring when there's no restrictions 404 is returned
     @Override
     public boolean hasError(ClientHttpResponse response) throws IOException {
-        return response.getRawStatusCode() != 404;
+        return response.getStatusCode().value() != 404;
     }
 
     @Override
